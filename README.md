@@ -53,7 +53,7 @@ learn-dev-env-csharp/
 - Win11 Pro (WSL2が使用できること)
 - Docker Desktopは使用しません (インストールされている場合は競合などのトラブルが発生する可能性があります)
 - [VS Code](https://code.visualstudio.com/) がInstallされていること
-- VSCodeのExtensionで [Dev Containers拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) がInstallされていること (本リポジトリに推奨Extensinosが定義されています `.vscode/extensions.json` )
+- VSCodeのExtensionsで [Dev Containers拡張機能](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) がInstallされていること (本リポジトリに推奨Extensionsが定義されています `.vscode/extensions.json` )
 - Git がInstallされていること (出来るだけ新しいバージョンを使うとトラブルが減ります)
 
 ### セットアップ
@@ -230,7 +230,7 @@ VS Code のコマンドパレット (`Ctrl+Shift+P`) で以下を実行:
 
 ```bash
 # NuGet キャッシュをクリア
- dotnet nuget locals all --clear
+dotnet nuget locals all --clear
 dotnet restore
 ```
 

@@ -14,6 +14,38 @@ Win11のWSL2上でLinuxコンテナを動かす構成としていますから、
 - ✅ **.NET 9.0**: 最新の .NET SDK を使用
 - ✅ **エンタープライズグレード**: Roslyn解析器、Code品質ツール標準装備
 
+## 🏗️ プロジェクト構造
+
+```
+learn-dev-env-csharp/
+├── learn-dev-env-csharp.csproj      # ルートプロジェクトファイル
+├── learn-dev-env-csharp.sln         # ソリューションファイル
+├── README.md                        # このファイル
+├── LICENSE                          # ライセンス
+├── .devcontainer/                   # DevContainer設定
+│   └── devcontainer.json            #  :
+├── .vscode/                         # VS Code設定
+│   ├── extensions.json              # 推奨拡張機能
+│   ├── settings.json                # ワークスペース設定
+│   ├── launch.json                  # デバッグ設定
+│   └── tasks.json                   # ビルド・実行タスク
+├── src/                             # ソースコードディレクトリ
+│   └── HelloWorld/                  # 環境確認用サンプルプロジェクト
+│       ├── Program.cs               # エントリーポイント
+│       └── Services/                # ソースコード群
+│           └── GreetingService.cs   #   :
+├── bin/                             # ビルド出力（自動生成）
+└── obj/                             # ビルド中間ファイル（自動生成）
+```
+
+### ディレクトリ構造について
+
+- **`learn-dev-env-csharp.csproj`**: ルートプロジェクトファイル。リポジトリ名と同一です。
+- **`src/` ディレクトリ**: 複数のサブプロジェクトを追加可能な拡張構造
+  - 各サブプロジェクト（例: `HelloWorld`, `YourProject`）を独立して実行可能
+  - サブプロジェクトごとにネームスペースを分離
+  - `Services/`, `Models/`, `Tests/` など、層別構造を採用
+
 ## 🚀 クイックスタート
 
 ### 前提条件
@@ -102,7 +134,7 @@ dotnet new console -n YourProjectName
 
 ### 3. ルートプロジェクトに新規プロジェクトを追加（オプション）
 
-複数のプロジェクトを一括ビルドする場合は、ルートの `lean-dev-env-csharp.csproj` に新しいプロジェクトへの参照を追加します:
+複数のプロジェクトを一括ビルドする場合は、ルートの `learn-dev-env-csharp.csproj` に新しいプロジェクトへの参照を追加します:
 
 ```bash
 # ルートディレクトリで実行
@@ -157,34 +189,6 @@ src/
 - **ネームスペース**: `YourProjectName` または `YourProjectName.Services` など、プロジェクト名に基づいた階層構造を使用
 - **レイヤー分離**: 大規模なプロジェクトは `Services/`, `Models/`, `Utils/` などのサブディレクトリで機能を分離
 - **テストプロジェクト**: テストが必要な場合は `tests/YourProjectName.Tests/` ディレクトリを作成
-## � プロジェクト構造
-
-```
-lean-dev-env-csharp/
-├── lean-dev-env-csharp.csproj       # ルートプロジェクトファイル（リポジトリ名と同じ）
-├── README.md                        # このファイル
-├── .devcontainer/                   # DevContainer設定
-│   ├── devcontainer.json
-│   └── Dockerfile
-├── .vscode/                         # VS Code設定
-│   ├── extensions.json              # 推奨拡張機能
-│   ├── settings.json                # ワークスペース設定
-│   └── tasks.json                   # ビルド・実行タスク
-├── src/                             # ソースコードディレクトリ
-│   └── HelloWorld/                  # 環境確認用サンプルプロジェクト
-│       ├── Program.cs               # エントリーポイント
-│       └── Services/                # ソースコード群
-│           └── GreetingService.cs   #   :
-└── bin/                             # ビルド出力（自動生成）
-```
-
-### ディレクトリ構造について
-
-- **`lean-dev-env-csharp.csproj`**: リポジトリのルートプロジェクトファイル。ベストプラクティスに従いリポジトリ名と同一です。
-- **`src/` ディレクトリ**: 複数のサブプロジェクトを追加可能な拡張構造
-  - 各サブプロジェクト（例: `HelloWorld`, `AnotherProject`）を独立して実行可能
-  - サブプロジェクトごとにネームスペースを分離
-  - `Services/`, `Models/`, `Tests/` など、層別構造を採用
 
 ## 🛠️ トラブルシューティング
 
@@ -206,6 +210,23 @@ dotnet build --verbosity diagnostic
 
 VS Code のコマンドパレット (`Ctrl+Shift+P`) で以下を実行:
 - `Extensions: Show Recommended Extensions` → 推奨拡張機能を確認・インストール
+
+### コンテナが起動しない場合
+
+VS Code のコマンドパレット (`Ctrl+Shift+P`) で以下を実行:
+- `Dev Containers: Rebuild Container`
+
+### ポート競合が発生した場合
+
+`.devcontainer/devcontainer.json` の `forwardPorts` を編集し、別のポートを指定してください。
+
+### dotnet restore が失敗する場合
+
+```bash
+# NuGet キャッシュをクリア
+ dotnet nuget locals all --clear
+dotnet restore
+```
 
 ## 🛠️ WSL2をセットアップしていない場合の環境構築ガイド（Windows 11 Pro + WSL2）
 
@@ -340,8 +361,8 @@ PowerShell で実行:
 # WSL2 Ubuntu のホームディレクトリにクローン（推奨）
 # WSL2 ターミナルで以下を実行
 cd ~
-git clone https://github.com/sun-flat-yamada/learn-structured-programming.git
-cd learn-structured-programming
+git clone https://github.com/sun-flat-yamada/learn-dev-env-csharp.git
+cd learn-dev-env-csharp
 
 # VS Code で開く（WSL2 環境から）
 code .
@@ -503,16 +524,6 @@ DevContainer 環境が完全にセットアップできたか確認:
 
 ---
 
-## 🏗️ プロジェクト構造
-
-```text
-learn-structured-programming/
-├── .devcontainer/
-│   └── devcontainer.json                    # DevContainer設定
-├── README.md                                # このファイル
-├── LICENSE                                  # ライセンス
-└── src/                                     # 講座用ソースコード
-    └── (あなたが自由に構成する場所)
 ## 🛠️ 開発環境仕様
 
 ### イメージ & ランタイム
@@ -741,18 +752,7 @@ dotnet tool restore --configfile nuget.config
 - **分析**: Roslyn Analyzer により自動チェック
 - **インデント**: スペース2文字
 
-## 📋 チェックリスト
-
-DevContainer が正常に動作しているか確認:
-
-- [ ] コンテナがビルド・起動できる
-- [ ] `dotnet --version` で .NET 9.0 が表示される
-- [ ] `dotnet build` が成功する
-- [ ] VS Code 拡張機能がすべてインストール済み
-- [ ] C# IntelliSense が動作する
-- [ ] テスト エクスプローラーが表示される
-
-## 🔗 参考リソース
+##  参考リソース
 
 ### 公式ドキュメント
 
@@ -769,28 +769,7 @@ DevContainer が正常に動作しているか確認:
 
 このプロジェクトは [LICENSE](./LICENSE) ファイルに記載されているライセンスの下で公開されています。
 
-## 💡 トラブルシューティング
-
-### コンテナが起動しない場合
-
-```bash
-# コンテナを再ビルド
-Dev Containers: Rebuild Container
-```
-
-### ポート競合が発生した場合
-
-`.devcontainer/devcontainer.json` の `forwardPorts` を編集し、別のポートを指定してください。
-
-### dotnet restore が失敗する場合
-
-```bash
-# NuGet キャッシュをクリア
-dotnet nuget locals all --clear
-dotnet restore
-```
-
-## 🙏 サポート
+##  サポート
 
 問題や質問がある場合は、GitHub Issues で報告してください。
 

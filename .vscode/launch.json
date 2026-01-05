@@ -2,18 +2,18 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": ".NET Core Launch (console)",
+      "name": ".NET Core Launch (HelloWorld)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",
-      "program": "${workspaceFolder}/bin/Debug/net9.0/${workspaceFolderBasename}.dll",
+      "program": "${workspaceFolder}/bin/Debug/net9.0/HelloWorld.dll",
       "args": [],
       "cwd": "${workspaceFolder}",
       "stopAtEntry": false,
       "console": "integratedTerminal"
     },
     {
-      "name": ".NET Core Launch (web)",
+      "name": ".NET Core Launch (lean-dev-env-csharp)",
       "type": "coreclr",
       "request": "launch",
       "preLaunchTask": "build",

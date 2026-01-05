@@ -76,7 +76,7 @@
   ],
 
   // === Initialization Commands ===
-  "postCreateCommand": "bash -c 'git config --global --add safe.directory /workspaces/learn-structured-programming && dotnet restore && dotnet tool restore'",
+  "postCreateCommand": "bash -c 'apt update && apt install -y less && git config --global --add safe.directory /workspaces/learn-dev-env-csharp && dotnet restore && dotnet tool restore'",
   "postStartCommand": "dotnet build --no-restore 2>/dev/null || true",
 
   // === Container Configuration ===

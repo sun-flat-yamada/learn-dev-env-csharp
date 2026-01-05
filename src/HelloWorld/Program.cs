@@ -7,8 +7,8 @@ namespace HelloWorld;
 /// </summary>
 internal static class Program
 {
-  private const int PropertyColumnWidth = 20;
-  private const int ValueColumnWidth = 50;
+  private const int PROPERTY_COLUMN_WIDTH = 20;
+  private const int VALUE_COLUMN_WIDTH = 50;
 
   private static void Main(string[] args)
   {
@@ -19,7 +19,7 @@ internal static class Program
     Console.WriteLine(greeting);
 
     // Display environment information
-    DisplayEnvironmentInfo();
+    displayEnvironmentInfo();
 
     Console.WriteLine("\n✓ HelloWorld program executed successfully!");
   }
@@ -27,29 +27,29 @@ internal static class Program
   /// <summary>
   /// Displays current environment and runtime information.
   /// </summary>
-  private static void DisplayEnvironmentInfo()
+  private static void displayEnvironmentInfo()
   {
     Console.WriteLine("\n--- Environment Information ---");
-    PrintTableRow("Property", "Value");
-    PrintTableSeparator();
-    PrintTableRow(".NET Version:", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
-    PrintTableRow("OS:", System.Runtime.InteropServices.RuntimeInformation.OSDescription);
-    PrintTableRow("Processor Count:", Environment.ProcessorCount.ToString());
+    printTableRow("Property", "Value");
+    printTableSeparator();
+    printTableRow(".NET Version:", System.Runtime.InteropServices.RuntimeInformation.FrameworkDescription);
+    printTableRow("OS:", System.Runtime.InteropServices.RuntimeInformation.OSDescription);
+    printTableRow("Processor Count:", Environment.ProcessorCount.ToString());
   }
 
   /// <summary>
   /// Prints a formatted table row with two columns.
   /// </summary>
-  private static void PrintTableRow(string property, string value)
+  private static void printTableRow(string property, string value)
   {
-    Console.WriteLine("{0} {1}", property.PadRight(PropertyColumnWidth), value);
+    Console.WriteLine("{0} {1}", property.PadRight(PROPERTY_COLUMN_WIDTH), value);
   }
 
   /// <summary>
   /// Prints a table separator line.
   /// </summary>
-  private static void PrintTableSeparator()
+  private static void printTableSeparator()
   {
-    Console.WriteLine("{0} {1}", new string('-', PropertyColumnWidth), new string('-', ValueColumnWidth));
+    Console.WriteLine("{0} {1}", new string('-', PROPERTY_COLUMN_WIDTH), new string('-', VALUE_COLUMN_WIDTH));
   }
 }

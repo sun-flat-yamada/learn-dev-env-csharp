@@ -33,20 +33,179 @@ Win11のWSL2上でLinuxコンテナを動かす構成としていますから、
    cd learn-dev-env-csharp
    ```
 
-2. `src` ディレクトリ以下に動かしたいC#プロジェクトを作る
- 
-3. **VS Code で DevContainer を開く**
+2. **VS Code で DevContainer を開く**
    - VS Code を開き、リポジトリフォルダを開く
    - コマンドパレット (`Ctrl+Shift+P`) で `Dev Containers: Reopen in Container` を実行
    - コンテナのビルドと初期化が完了するまで待機（初回は3-5分）
 
-4. **ビルド・実行方法**
+3. **環境確認用サンプルプログラム（HelloWorld）を実行**
+
+   C# 開発環境が正しく構築されたか確認するために、サンプルプログラムを実行できます。
 
    ```bash
-   # あなたが作成したC#プロジェクトの設定によります
+   # プロジェクトのビルド
    dotnet build
+
+   # プロジェクトの実行
    dotnet run
    ```
+
+   **期待される出力:**
+   ```
+   === Hello World ===
+   Hello, World! Welcome to C# development.
+   --- Environment Information ---
+   .NET Version: .NET 9.0.11
+   OS: Debian GNU/Linux 12 (bookworm)
+   Processor Count: 4
+   ✓ Sample program executed successfully!
+   ```
+
+   **別の実行方法（VS Code タスク）:**
+   - コマンドパレット (`Ctrl+Shift+P`) で `Tasks: Run Task` を実行
+   - 実行したいタスクを選択 (例: `build`, `run`, `test`)
+
+4. **プロジェクトの独立実行**
+
+   `src` ディレクトリ以下に作成した特定のプロジェクト（HelloWorldなど）を個別に実行する場合:
+
+   ```bash
+   # 特定のプロジェクトをビルド
+   dotnet build src/HelloWorld
+
+   # 特定のプロジェクトを実行
+   dotnet run --project src/HelloWorld
+   ```
+## 📝 新しいプロジェクトを作成する手順
+
+このリポジトリに新しいプロジェクトを追加する場合は、以下の手順に従ってください。
+
+### 1. 新しいプロジェクトディレクトリを作成
+
+```bash
+# src ディレクトリ下に新しいプロジェクトフォルダを作成
+mkdir -p src/YourProjectName
+cd src/YourProjectName
+```
+
+### 2. プロジェクトファイルを作成
+
+```bash
+# C# コンソールアプリケーションプロジェクトを生成
+dotnet new console -n YourProjectName
+```
+
+このコマンドで以下のファイルが自動生成されます:
+- `YourProjectName.csproj` - プロジェクトファイル
+- `Program.cs` - エントリーポイント
+- `obj/` - ビルド中間ファイル
+
+### 3. ルートプロジェクトに新規プロジェクトを追加（オプション）
+
+複数のプロジェクトを一括ビルドする場合は、ルートの `lean-dev-env-csharp.csproj` に新しいプロジェクトへの参照を追加します:
+
+```bash
+# ルートディレクトリで実行
+dotnet sln add src/YourProjectName/YourProjectName.csproj
+```
+
+### 4. 必要に応じてNuGetパッケージを追加
+
+```bash
+# プロジェクトディレクトリで実行
+cd src/YourProjectName
+dotnet add package <PackageName>
+```
+
+例: `Newtonsoft.Json` パッケージを追加する場合
+```bash
+dotnet add package Newtonsoft.Json
+```
+
+### 5. 新しいプロジェクトをビルド・実行
+
+```bash
+# 特定のプロジェクトをビルド
+dotnet build src/YourProjectName
+
+# 特定のプロジェクトを実行
+dotnet run --project src/YourProjectName
+
+# または、ルートから全プロジェクトをビルド（YourProjectNameも含まれます）
+dotnet build
+```
+
+### ディレクトリ構造例
+
+```
+src/
+├── HelloWorld/
+│   ├── Program.cs
+│   ├── YourProjectName.csproj
+│   └── Services/
+│       └── GreetingService.cs
+└── YourProjectName/          # ← 新しいプロジェクト
+    ├── Program.cs
+    ├── YourProjectName.csproj
+    ├── Models/
+    ├── Services/
+    └── Utils/
+```
+
+### 推奨事項
+
+- **ネームスペース**: `YourProjectName` または `YourProjectName.Services` など、プロジェクト名に基づいた階層構造を使用
+- **レイヤー分離**: 大規模なプロジェクトは `Services/`, `Models/`, `Utils/` などのサブディレクトリで機能を分離
+- **テストプロジェクト**: テストが必要な場合は `tests/YourProjectName.Tests/` ディレクトリを作成
+## � プロジェクト構造
+
+```
+lean-dev-env-csharp/
+├── lean-dev-env-csharp.csproj       # ルートプロジェクトファイル（リポジトリ名と同じ）
+├── README.md                        # このファイル
+├── .devcontainer/                   # DevContainer設定
+│   ├── devcontainer.json
+│   └── Dockerfile
+├── .vscode/                         # VS Code設定
+│   ├── extensions.json              # 推奨拡張機能
+│   ├── settings.json                # ワークスペース設定
+│   └── tasks.json                   # ビルド・実行タスク
+├── src/                             # ソースコードディレクトリ
+│   └── HelloWorld/                  # 環境確認用サンプルプロジェクト
+│       ├── Program.cs               # エントリーポイント
+│       └── Services/                # ソースコード群
+│           └── GreetingService.cs   #   :
+└── bin/                             # ビルド出力（自動生成）
+```
+
+### ディレクトリ構造について
+
+- **`lean-dev-env-csharp.csproj`**: リポジトリのルートプロジェクトファイル。ベストプラクティスに従いリポジトリ名と同一です。
+- **`src/` ディレクトリ**: 複数のサブプロジェクトを追加可能な拡張構造
+  - 各サブプロジェクト（例: `HelloWorld`, `AnotherProject`）を独立して実行可能
+  - サブプロジェクトごとにネームスペースを分離
+  - `Services/`, `Models/`, `Tests/` など、層別構造を採用
+
+## 🛠️ トラブルシューティング
+
+### ビルドやコンパイルエラーが出る場合
+
+```bash
+# 1. NuGet パッケージを復元
+dotnet restore
+
+# 2. クリーンビルド
+dotnet clean
+dotnet build
+
+# 3. 詳細なエラー情報を表示
+dotnet build --verbosity diagnostic
+```
+
+### 推奨拡張機能がインストールされていない場合
+
+VS Code のコマンドパレット (`Ctrl+Shift+P`) で以下を実行:
+- `Extensions: Show Recommended Extensions` → 推奨拡張機能を確認・インストール
 
 ## 🛠️ WSL2をセットアップしていない場合の環境構築ガイド（Windows 11 Pro + WSL2）
 

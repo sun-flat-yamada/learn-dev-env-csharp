@@ -16,7 +16,7 @@ Win11のWSL2上でLinuxコンテナを動かす構成としていますから、
 
 ## 🏗️ プロジェクト構造
 
-```
+```txt
 learn-dev-env-csharp/
 ├── learn-dev-env-csharp.csproj      # ルートプロジェクトファイル
 ├── learn-dev-env-csharp.sln         # ソリューションファイル
@@ -83,7 +83,8 @@ learn-dev-env-csharp/
    ```
 
    **期待される出力:**
-   ```
+
+   ```bash
    === Hello World ===
    Hello, World! Welcome to C# development.
    --- Environment Information ---
@@ -108,6 +109,7 @@ learn-dev-env-csharp/
    # 特定のプロジェクトを実行
    dotnet run --project src/HelloWorld
    ```
+
 ## 📝 新しいプロジェクトを作成する手順
 
 このリポジトリに新しいプロジェクトを追加する場合は、以下の手順に従ってください。
@@ -128,6 +130,7 @@ dotnet new console -n YourProjectName
 ```
 
 このコマンドで以下のファイルが自動生成されます:
+
 - `YourProjectName.csproj` - プロジェクトファイル
 - `Program.cs` - エントリーポイント
 - `obj/` - ビルド中間ファイル
@@ -150,6 +153,7 @@ dotnet add package <PackageName>
 ```
 
 例: `Newtonsoft.Json` パッケージを追加する場合
+
 ```bash
 dotnet add package Newtonsoft.Json
 ```
@@ -169,7 +173,7 @@ dotnet build
 
 ### ディレクトリ構造例
 
-```
+```txt
 src/
 ├── HelloWorld/
 │   ├── Program.cs
@@ -209,11 +213,13 @@ dotnet build --verbosity diagnostic
 ### 推奨拡張機能がインストールされていない場合
 
 VS Code のコマンドパレット (`Ctrl+Shift+P`) で以下を実行:
+
 - `Extensions: Show Recommended Extensions` → 推奨拡張機能を確認・インストール
 
 ### コンテナが起動しない場合
 
 VS Code のコマンドパレット (`Ctrl+Shift+P`) で以下を実行:
+
 - `Dev Containers: Rebuild Container`
 
 ### ポート競合が発生した場合
@@ -752,7 +758,7 @@ dotnet tool restore --configfile nuget.config
 - **分析**: Roslyn Analyzer により自動チェック
 - **インデント**: スペース2文字
 
-##  参考リソース
+## 📝 参考リソース
 
 ### 公式ドキュメント
 
@@ -769,11 +775,11 @@ dotnet tool restore --configfile nuget.config
 
 このプロジェクトは [LICENSE](./LICENSE) ファイルに記載されているライセンスの下で公開されています。
 
-##  サポート
+## 🛠️ サポート
 
 問題や質問がある場合は、GitHub Issues で報告してください。
 
 ---
 
-**最終更新**: 2025-12-25 Youhei Yamada
+**最終更新**: 2026-01-05 Youhei Yamada
 **環境**: .NET 9.0 LTS | VS Code | Docker | DevContainer

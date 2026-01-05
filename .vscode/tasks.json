@@ -151,7 +151,7 @@
       "label": "analyze (SonarLint)",
       "command": "dotnet",
       "type": "process",
-      "args": ["sonarscanner", "begin", "/k:learn-structured-programming"],
+      "args": ["sonarscanner", "begin", "/k:learn-dev-env-csharp"],
       "problemMatcher": "$msCompile",
       "group": "build"
     },
